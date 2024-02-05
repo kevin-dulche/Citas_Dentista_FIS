@@ -1,5 +1,6 @@
 from tkinter import Tk, Label, Button, Entry, messagebox
 from PIL import Image, ImageTk
+from tkinter import Canvas
 import tkinter as tk 
 import mysql.connector
 
@@ -123,7 +124,8 @@ def abrir_ventana_segun_rol(usuario):
     elif rol == 'Recepcionista':
         from VentanaRecepcionista import VentanaRecepcionista
         VentanaRecepcionista(usuario)
-    elif rol == 'Recepcionista':
+    elif rol == 'Paciente':
+        from VentanaPaciente import VentanaPaciente
         VentanaPaciente(usuario)
     else:
         messagebox.showwarning("Advertencia", "Rol desconocido")

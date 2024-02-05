@@ -1,10 +1,9 @@
 from Login import *
 
-class VentanaRecepcionista:
+class VentanaPaciente:
     def __init__(self, usuario):
-        self.usuario = usuario
         self.ventana = Tk()
-        self.ventana.title("Recepcionista" + " - " + self.usuario[1])
+        self.ventana.title("Paciente" + " - " + usuario[1])
 
         # Centrar la ventana en la pantalla
         self.centrar_ventana()
@@ -19,7 +18,7 @@ class VentanaRecepcionista:
         lbPaciente = Label(self.ventana, text="Paciente", font=("Arial", 20, "bold"), anchor="center")
         lbPaciente.place(x=340, y=20, width=120, height=30)
 
-        botonAltaPaciente = Button(self.ventana, text="Alta", font=("Arial", 16), anchor="center", command=self.alta_paciente)
+        botonAltaPaciente = Button(self.ventana, text="Alta", font=("Arial", 16), anchor="center")
         botonAltaPaciente.place(x=87.5, y=70, width=150, height=50)
 
         botonBajaPaciente = Button(self.ventana, text="Baja", font=("Arial", 16), anchor="center")
@@ -69,10 +68,7 @@ class VentanaRecepcionista:
 
         self.ventana.mainloop()
 
-    def alta_paciente(self):
-        self.ventana.destroy()
-        from VentanaAltaPaciente import VentanaAltaPaciente
-        VentanaAltaPaciente(usuario=self.usuario)
+    # Contenido específico para el rol de usuario
 
     def centrar_ventana(self):
         ancho_ventana = 800
@@ -97,4 +93,4 @@ class VentanaRecepcionista:
         self.regreso = Login()
         self.regreso.ventana.mainloop() 
 
-# prueba = VentanaRecepcionista((2,"Fernanda Estevez","Hola12345","Recepcionista"))
+# pruebas = VentanaPaciente("Paciente")
