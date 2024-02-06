@@ -142,13 +142,12 @@ class VentanaAltaPaciente:
         self.textoMunicipio.configure(font=("Arial", 14))
         self.textoMunicipio.place(x=580, y=289, width=170, height=40)
 
-        estados_mexico = ["Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Coahuila", "Colima", "CDMX", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "México", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas"]
 
         lbEstado = Label(self.ventana, text="Estado: ", font=("Arial", 15), anchor="w")
         lbEstado.place(x=400, y=339, width=130, height=40)
+        estados_mexico = ["Aguascalientes", "Baja California", "Baja California Sur", "Campeche", "Chiapas", "Chihuahua", "Coahuila", "Colima", "CDMX", "Durango", "Guanajuato", "Guerrero", "Hidalgo", "Jalisco", "México", "Michoacán", "Morelos", "Nayarit", "Nuevo León", "Oaxaca", "Puebla", "Querétaro", "Quintana Roo", "San Luis Potosí", "Sinaloa", "Sonora", "Tabasco", "Tamaulipas", "Tlaxcala", "Veracruz", "Yucatán", "Zacatecas"]
         self.texto_estado = StringVar()
-        self.combo_estado = Combobox(self.ventana, textvariable=self.texto_estado, values=estados_mexico)
-        self.combo_estado.configure(font=("Arial", 14))
+        self.combo_estado = Combobox(self.ventana, textvariable=self.texto_estado, values=estados_mexico, font=("Arial", 15), state="readonly")
         self.combo_estado.place(x=580, y=339, width=170, height=40)
 
         lbTelefono = Label(self.ventana, text="Teléfono: ", font=("Arial", 15), anchor="w")
@@ -208,45 +207,28 @@ class VentanaAltaPaciente:
         self.ventana.geometry(f'{ancho_ventana}x{alto_ventana}+{x}+{y}')
 
     def AltaPaciente(self):
-        username = self.textoUsuario.get()
-        password = self.textoContraseña.get()
-        role = "Paciente"
-        nombre_s = self.textoNombre.get()
-        apellido_paterno = self.textoApellidoPaterno.get()
-        apellido_materno = self.textoApellidoMaterno.get()
-        edad = self.textoEdad.get()
-        peso = self.textoPeso.get()
-        sexo = self.comboSexo.get()
-        calle = self.textoCalle.get()
-        numero = self.textoNumero.get()
-        colonia = self.textoColonia.get()
-        codigo_postal = self.textoCodigoPostal.get()
-        alcaldia_municipio = self.textoMunicipio.get()
-        estado = self.combo_estado.get()
-        telefono = self.textoTelefono.get()
-        fechaNacimiento = self.fecha_nacimiento.get_date()
-        fechaAlta = self.fecha_alta.get_date()
-        patologias = ''
-
-        # Configura la conexión a la base de datos (ajusta según tu configuración)
-        self.conexion = mysql.connector.connect(
-            host="localhost",
-            user="root",
-            password="root",
-            database="login"
-        )
-
-        self.cursor = self.conexion.cursor()
-
+        
         try:
-            # Recopila datos del formulario
-            username = self.textoUsuario.get()
+            # Configura la conexión a la base de datos (ajusta según tu configuración)
+            self.conexion = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="root",
+                database="login"
+            )
+
+            self.cursor = self.conexion.cursor()
+
+            if self.textoUsuario.get() == "" or self.textoContraseña.get() == "" or self.textoNombre.get() == "" or self.textoApellidoPaterno.get() == "" or self.textoApellidoMaterno.get() == "" or self.textoEdad.get() == "" or self.textoPeso.get() == "" or self.textoCalle.get() == "" or self.textoNumero.get() == "" or self.textoColonia.get() == "" or self.textoCodigoPostal.get() == "" or self.textoMunicipio.get() == "" or self.textoTelefono.get() == "":
+                messagebox.showerror("Error", "Favor de llenar todos los campos")
+                return
+            username = self.textoUsuario.get() 
             password = self.textoContraseña.get()
             role = "Paciente"
             nombre_s = self.textoNombre.get()
             apellido_paterno = self.textoApellidoPaterno.get()
             apellido_materno = self.textoApellidoMaterno.get()
-            edad = self.combo_edad.get()
+            edad = self.textoEdad.get()
             peso = self.textoPeso.get()
             sexo = self.comboSexo.get()
             calle = self.textoCalle.get()
@@ -256,8 +238,8 @@ class VentanaAltaPaciente:
             alcaldia_municipio = self.textoMunicipio.get()
             estado = self.combo_estado.get()
             telefono = self.textoTelefono.get()
-            fechaNacimiento = self.fecha_nacimiento.get()
-            fechaAlta = self.fecha_alta.get()
+            fechaNacimiento = self.fecha_nacimiento.get_date()
+            fechaAlta = self.fecha_alta.get_date()
             patologias = ''
 
             # Inserta usuario
@@ -278,17 +260,16 @@ class VentanaAltaPaciente:
             messagebox.showinfo("Alta de Paciente", "Paciente registrado con éxito")
             self.cancelar()
 
-        except mysql.connector.Error as err:
-            messagebox.showerror("Error de MySQL", f"Error de MySQL: {err}")
-
-        finally:
             # Cierra el cursor y la conexión
             self.cursor.close()
             self.conexion.close()
+
+        except Exception as err:
+            messagebox.showerror("Error", f"Error en la carga de datos:\n{str(err)}")
 
     def cancelar(self):
         self.ventana.destroy()
         self.regreso = VentanaRecepcionista(self.usuario)
         self.regreso.ventana.mainloop() 
 
-prueba = VentanaAltaPaciente((2,"Fernanda Estevez","Hola12345","Recepcionista"))
+# prueba = VentanaAltaPaciente((2,"Fernanda Estevez","Hola12345","Recepcionista"))

@@ -22,7 +22,7 @@ class VentanaRecepcionista:
         botonAltaPaciente = Button(self.ventana, text="Alta", font=("Arial", 16), anchor="center", command=self.alta_paciente)
         botonAltaPaciente.place(x=87.5, y=70, width=150, height=50)
 
-        botonBajaPaciente = Button(self.ventana, text="Baja", font=("Arial", 16), anchor="center")
+        botonBajaPaciente = Button(self.ventana, text="Baja", font=("Arial", 16), anchor="center", command=self.baja_paciente)
         botonBajaPaciente.place(x=325, y=70, width=150, height=50)
 
         botonModificarPaciente = Button(self.ventana, text="Modificar", font=("Arial", 16), anchor="center")
@@ -73,6 +73,11 @@ class VentanaRecepcionista:
         self.ventana.destroy()
         from VentanaAltaPaciente import VentanaAltaPaciente
         VentanaAltaPaciente(usuario=self.usuario)
+
+    def baja_paciente(self):
+        self.ventana.destroy()
+        from VentanaBajaPaciente import VentanaBajaPaciente
+        VentanaBajaPaciente(usuario=self.usuario)
 
     def centrar_ventana(self):
         ancho_ventana = 800

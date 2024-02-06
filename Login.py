@@ -106,7 +106,7 @@ class Login:
                 messagebox.showerror("Error", "Nombre de usuario y/o contraseña incorrectos.")
 
         except mysql.connector.Error as err:
-            messagebox.showerror("Error de MySQL", f"Error de MySQL: {err}")
+            messagebox.showerror("Error de MySQL", f"Error de conexión con la base de datos:\n{err}")
 
         finally:
             # Cerrar la conexión
