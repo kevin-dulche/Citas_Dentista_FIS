@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button, Entry, messagebox
+from tkinter import Tk, Label, Button, Entry, messagebox, PhotoImage, Scrollbar, Text
 from PIL import Image, ImageTk
 from tkinter import Canvas
 import tkinter as tk 

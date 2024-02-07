@@ -25,7 +25,7 @@ class VentanaRecepcionista:
         botonBajaPaciente = Button(self.ventana, text="Baja", font=("Arial", 16), anchor="center", command=self.baja_paciente)
         botonBajaPaciente.place(x=325, y=70, width=150, height=50)
 
-        botonModificarPaciente = Button(self.ventana, text="Modificar", font=("Arial", 16), anchor="center")
+        botonModificarPaciente = Button(self.ventana, text="Modificar", font=("Arial", 16), anchor="center", command=self.modificar_paciente)
         botonModificarPaciente.place(x=562.5, y=70, width=150, height=50)
 
         # Dibujar una línea horizontal
@@ -78,6 +78,11 @@ class VentanaRecepcionista:
         self.ventana.destroy()
         from VentanaBajaPaciente import VentanaBajaPaciente
         VentanaBajaPaciente(usuario=self.usuario)
+
+    def modificar_paciente(self):
+        self.ventana.destroy()
+        from VentanaModificarPaciente import VentanaIdentificacion
+        VentanaIdentificacion(usuario=self.usuario)
 
     def centrar_ventana(self):
         ancho_ventana = 800
